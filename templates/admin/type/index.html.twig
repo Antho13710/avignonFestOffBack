@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Genres{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Liste des genres</h1>
+    <div class="link mb-4">
+        <a href="{{ path('admin_home') }}"> < Retour à l'accueil</a>
+    </div>
+    <a href="{{ path('admin_type_add') }}" class="btn btn-primary mb-3">Nouveau</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type in types %}
+                <tr>
+                    <td>{{ type.id }}</td>
+                    <td>{{ type.name }}</td>
+                    <td class="text-end">
+                        <a href="{{ path('admin_type_edit', {id: type.id}) }}" class="btn btn-warning">Modifier</a>
+                        <form action="{{ path('admin_type_delete', { id: type.id }) }}" method="post" class="d-inline">
+                            <input type="hidden" name="token" value="{{ csrf_token('delete-type') }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Etes-vous sûr ? La suppression est définitive !');">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+

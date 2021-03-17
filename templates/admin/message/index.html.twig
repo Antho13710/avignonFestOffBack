@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des messages{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Liste des messages</h1>
+    <div class="link mb-4">
+        <a href="{{ path('admin_home') }}"> < Retour à l'accueil</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Utilisateur</th>
+                <th scope="col">Objet</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+                <tr {% if message.isRead is same as(true) %} class="bg-light text-muted" {% endif %}>
+                    <td>{{ message.createdAt | date("d/m/Y") }}</td>
+                    <td>{{ message.user.firstname }} {{ message.user.lastname }}</td>
+                    <td>{{ message.object }}</td>
+                    <td><a href="{{ path('admin_message_show', {id: message.id}) }}" class="btn btn-warning">{% if message.isRead is same as(true) %} Relire {% else %} Lire {% endif %}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

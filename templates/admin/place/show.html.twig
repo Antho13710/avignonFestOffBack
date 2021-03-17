@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ place.name }}{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="my-5">
+            <a href="{{ path('admin_place_list') }}"> < Retour à la liste des lieux</a>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ place.name }}</h5>
+                <p class="card-text">{{ place.address }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <div class="card-body">
+                    <li class="list-group-item"><h6>Liste des événements joués :</h6></li>
+                    {% for event in place.events %}
+                        <li class="list-group-item"><a href="{{ path('admin_event_show', {id: event.id}) }}">{{ event.title }}</a></li>
+                    {% endfor %}
+                </div>
+            </ul>
+            <div class="card-body">
+                <a href="{{ path('admin_place_edit', {id: place.id}) }}" class="btn btn-sm btn-primary mb-2">Modifier</a>
+                <form action="{{ path('admin_place_delete', {id: place.id}) }}" method="post">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete-place') }}" />
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

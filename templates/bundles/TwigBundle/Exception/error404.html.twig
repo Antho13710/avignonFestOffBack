@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <img src="{{ asset('image/theater-399963_640.jpg') }}" class="img-fluid" alt="404 page">
+        <h1 class="mt-5">Erreur 404 - La page demandée est introuvable.</h1>
+    </div>
+{% endblock %}

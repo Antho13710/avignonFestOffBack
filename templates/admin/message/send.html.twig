@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Envoyer un message{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <h1>Envoyer un message à {{ contact.user.firstname }} {{ contact.user.lastname }}</h1>
+        
+        <div class="my-5">
+            <a href="{{ path('admin_message_list') }}">Retour à la liste des Messages</a>
+        </div>
+        {% include "_form.html.twig" %}
+
+        <div class="card my-5 text-muted">
+            <div class="card-body">
+                <h5 class="card-title">{{ contact.object }}</h5>
+                <p class="card-text">De : {{ contact.user.email }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <div class="card-body">
+                    <p class="card-text">{{ contact.content }}</p>
+                </div>
+            </ul>
+    </div>
+{% endblock %}

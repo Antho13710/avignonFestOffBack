@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="my-5">
+            <a href="{{ path('admin_event_list') }}"> < Retour à la liste des événements</a>
+        </div>
+        <img class="w-50 h-50" src="{{ asset('upload/images/' ~ event.image) }}" alt="affiche événement">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ event.title }}</h5>
+                <p class="card-text">{{ event.eventDescription }}</p>
+            </div>
+            <ul class="list-group list-group-flush">                
+                <li class="list-group-item">Nombre de signalements : {% if event.alerts | length is same as(0) %} 0 {% else %}<a href="{{ path('admin_alert_by_event', {id: event.id}) }}">{{ event.alerts | length }} </a>{% endif %}</li>
+                <li class="list-group-item">Durée : {{ event.time }}h</li>
+                <li class="list-group-item">Genre : {{ event.type.name }}</li>
+                <li class="list-group-item">Lieu : {{ event.place.name }} - {{ event.place.address }}</li>
+                <li class="list-group-item">Tarif Plein : {{ event.fullPrice }} €</li>
+                <li class="list-group-item">Tarif Abonné : {{ event.subscriberPrice }} €</li>
+                <li class="list-group-item">Tarif Réduit : {{ event.reducedPrice }} €</li>
+                <li class="list-group-item">Tarif Enfant : {{ event.childrenPrice }} €</li>
+                {% for date in event.dates %}
+                    <li class="list-group-item">{{ date.startDate | date("d/m/Y") }} - {{ date.endDate | date("d/m/Y")}}</li>
+                {% endfor %}
+                <li class="list-group-item">Jour(s) de relache :</li>
+                {% for off in event.dayOffs %}
+                    <li class="list-group-item">{{ off.date | date("d/m/Y") }}</li>
+                {% endfor %}
+            </ul>
+            <div class="card-body">
+                <form action="{{ path('admin_event_delete', {id:event.id}) }}" method="post">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete-event') }}" />
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

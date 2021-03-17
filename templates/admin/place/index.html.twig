@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des lieux{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+<h1>Liste des lieux</h1>
+<div class="link mb-4">
+    <a href="{{ path('admin_home') }}"> < Retour à l'accueil</a>
+</div>
+<i><strong>Il y a {{ places | length }} lieux enregistrés</strong></i>
+<div class="mt-4">
+    <a href="{{ path('admin_place_add') }}" class="btn btn-primary mb-3">Nouveau</a>
+</div>
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Adresse</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for place in places %}
+                <tr>
+                    <td>{{ place.id }}</td>
+                    <td>{{ place.name }}</td>
+                    <td>{{ place.address }}</td>
+                    <td><a href="{{ path('admin_place_show', {id: place.id}) }}" class="btn btn-warning">Consulter</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

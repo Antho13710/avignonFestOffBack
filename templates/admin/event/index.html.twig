@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des événements{% endblock %}
+
+{% block navbar %}
+    {% include "_navbar.html.twig" %}
+{% endblock %}
+
+
+{% block body %}
+<div class="container mt-4">
+<h1>Liste des événements</h1>
+<div class="link mb-4">
+    <a href="{{ path('admin_home') }}"> < Retour à l'accueil</a>
+</div>
+<i><strong>Il y a {{ count }} événements enregistrés</strong></i>
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Signalements</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.id }}</td>
+                    <td>{{ event.title }}</td>
+                    <td>{% if event.alerts | length is same as(0) %} 0 {% else %}<a href="{{ path('admin_alert_by_event', {id: event.id}) }}">{{ event.alerts | length }} </a>{% endif %}</td>
+                    <td><a class="btn btn-warning" href="{{ path('admin_event_show', {id: event.id}) }}">Consulter</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(events) }}
+    </div>
+</div>
+
+{% endblock %}
