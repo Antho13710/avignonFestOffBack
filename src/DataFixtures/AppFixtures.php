@@ -148,10 +148,6 @@ class AppFixtures extends Fixture
             $manager->persist($newAlert);
         }
 
-        /* TODO : trouver un moyen de saisir des jours de relaches qui ne sont pas égaux aux jours de 
-        *        début ou de fin de l'event
-        */
-
         // Add dates for 100 events
         for ($d = 0; $d < count($events); $d++) {
             $dates = [];
